@@ -14,5 +14,10 @@
 
 ---
 [![](https://visitcount.itsvg.in/api?id=philipgisore&icon=0&color=0)](https://visitcount.itsvg.in)
+<picture>
+    <source media;="(prefers-color-scheme: dark)"https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg />
+     <source media;="(prefers-color-scheme: light)"https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg />
+     <img alt="github-snake" src="https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg"/>
+</picture>
 
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
