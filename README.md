@@ -38,11 +38,6 @@
 
 ---
 
-## 🏆 GitHub Trophies
-![](https://github-profile-trophy.vercel.app/?username=philipgisore&theme=tokyonight&no-frame=true&no-bg=true&margin-w=4)
-
----
-
 ## 🐍 GitHub Contribution Snake
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg" />
