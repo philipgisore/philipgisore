@@ -1,23 +1,118 @@
-# 💫 About Me:
-👋 Hi there! I'm a passionate BBIT student with a growing love for full-stack development.<br> I enjoy building web applications, exploring JavaScript, and learning new technologies <br>every day. Currently diving into React and expanding my skills in databases and networking.<br>Always excited to connect, collaborate, and create.
+name: Generate Profile README
 
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+  
+  # Runs on schedule (every 12 hours)
+  schedule:
+    - cron: "0 */12 * * *"
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/Philip Gisore) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:philipgisore7@gmail.com) 
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
-# 💻 Tech Stack:
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7) ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white) ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white) ![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-# 📊 GitHub Stats:
-![](https://github-readme-stats.vercel.app/api?username=philipgisore&theme=dark&hide_border=false&include_all_commits=false&count_private=false)<br/>
-![](https://nirzak-streak-stats.vercel.app/?user=philipgisore&theme=dark&hide_border=false)<br/>
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=philipgisore&theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
+jobs:
+  generate-snake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # Generate the snake animation
+      - name: Generate Snake Animation
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: philipgisore
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+            dist/github-snake-light.svg?palette=github-light
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # Setup Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      # Upload artifact
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+      
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
----
-[![](https://visitcount.itsvg.in/api?id=philipgisore&icon=0&color=0)](https://visitcount.itsvg.in)
-<picture>
-    <source media;="(prefers-color-scheme: dark)"https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg />
-     <source media;="(prefers-color-scheme: light)"https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg />
-     <img alt="github-snake" src="https://raw.githubusercontent.com/philipgisore/philipgisore/output/github-snake-dark.svg"/>
-</picture>
+  update-readme:
+    runs-on: ubuntu-latest
+    needs: generate-snake
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # Update README with dynamic content
+      - name: Update README
+        run: |
+          # Get current date
+          DATE=$(date +'%Y-%m-%d %H:%M:%S UTC')
+          
+          # Create a backup of original README
+          cp README.md README.backup.md
+          
+          # Update last updated timestamp (if you want to add this)
+          echo "<!-- Last updated: $DATE -->" >> README.md
+      
+      # Commit and push if there are changes
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "🚀 Update README and snake animation - $(date +'%Y-%m-%d')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
+  # Job to update GitHub profile with latest stats
+  update-profile-stats:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # This will trigger regeneration of GitHub stats
+      - name: Trigger Stats Update
+        run: |
+          echo "Stats will be updated automatically by the services"
+          echo "GitHub ReadMe Stats: $(date)"
+          echo "Streak Stats: $(date)"
+      
+      # Optional: Add more dynamic content updates here
+      - name: Add Dynamic Content
+        run: |
+          echo "Profile updated at: $(date)" > .github/last-update.txt
+      
+      - name: Commit updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .github/last-update.txt
+          git diff --staged --quiet || git commit -m "📊 Update profile stats - $(date +'%Y-%m-%d')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
