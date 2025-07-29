@@ -5,7 +5,8 @@
 
 ## 🌐 Socials:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/philip-gisore) 
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:philipgisore7@gmail.com) 
+<a href="mailto:philipgisore7@gmail.com">&#112;&#104;&#105;&#108;&#105;&#112;&#103;&#105;&#115;&#111;&#114;&#101;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
+
 [![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/philipgisore)
 
 ---
